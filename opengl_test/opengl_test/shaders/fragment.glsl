@@ -1,8 +1,6 @@
-#version 300 es
-precision mediump float;
-
+#version 330 core
 out vec4 color;
-
-void main() {
-    color = vec4(0.6, 0.0, 1.0, 1.0);
+void main()
+{
+    color = vec4(0.6f, 0.0f, 1.0f, 1.0f);
 }

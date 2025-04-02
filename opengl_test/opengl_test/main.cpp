@@ -7,21 +7,7 @@
 #include <GLFW/glfw3.h> //подключение библиотеки GLFW
 #include <OpenGL/gl3.h> //для MacOS
 
-//вершинный шейдер
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-"}\0";
-
-//фрагментный шейдер
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"color = vec4(0.6f, 0.0f, 1.0f, 1.0f);\n"
-"}\n\0";
+#include "shaders_loader.h"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -75,52 +61,13 @@ int main(){
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
     
-    //создаем и комплириуем шейдерную программу
-    
-    //вершинный шейдер
-    //привязываем исходный код шейдера к объекту шейдера и компилируем его
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    
-    //проверка корректности сброки шейдера
-    GLint success; //число для определения успешности сборки
-    GLchar infoLog[512]; //контейнер для хранения ошибок
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success); //проверка успешности
-    if(!success){
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "Error with vertex shader\n" << infoLog << std::endl;
+    //загружаем шейдеры из папки
+    GLuint shaderProgram = createShaderProgram("opengl_test/shaders/vertex.glsl", "opengl_test/shaders/fragment.glsl");
+    if (!shaderProgram) {
+        std::cerr << "Failed to create shader program\n";
+        glfwTerminate();
+        return -1;
     }
-    
-    //фрагментный шейдер
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    
-    //проверка корректности сброки шейдера
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success); //проверка успешности
-    if(!success){
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "Error with fragment shader\n" << infoLog << std::endl;
-    }
-    
-    //соединяем два шейдера в один объект шейдерной программы
-    GLuint shaderProgram;
-    shaderProgram = glCreateProgram();
-    //присоединяем
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    //связываем
-    glLinkProgram(shaderProgram);
-    //проверяем на корректность объединения
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if(!success){
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "Error with linking shader program\n" << infoLog << std::endl;
-    }
-    //удаляем созданные шейдеры после связывания
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
     /*
     //массив с вершинами треугольника
     GLfloat vertices[] = {

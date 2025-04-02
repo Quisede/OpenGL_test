@@ -26,6 +26,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		0A01DA232D9DAB020035545B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +48,23 @@
 		0A01DA022D9C51ED0035545B /* libGLEW.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.2.0.dylib; path = ../../../../opt/homebrew/Cellar/glew/2.2.0_1/lib/libGLEW.2.2.0.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		0A01DA262D9DAB300035545B /* Exceptions for "opengl_test" folder in "Copy Files" phase from "opengl_test" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 0A01DA232D9DAB020035545B /* CopyFiles */;
+			membershipExceptions = (
+				shaders/fragment.glsl,
+				shaders/vertex.glsl,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0A01D9ED2D9C3CF10035545B /* opengl_test */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0A01DA262D9DAB300035545B /* Exceptions for "opengl_test" folder in "Copy Files" phase from "opengl_test" target */,
+			);
 			path = opengl_test;
 			sourceTree = "<group>";
 		};
@@ -106,6 +129,7 @@
 				0A01D9E72D9C3CF10035545B /* Sources */,
 				0A01D9E82D9C3CF10035545B /* Frameworks */,
 				0A01D9E92D9C3CF10035545B /* CopyFiles */,
+				0A01DA232D9DAB020035545B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -284,7 +308,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /opt/homebrew/include;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/include,
+					"$(PROJECT_DIR)/shaders",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/opt/homebrew/Cellar/glfw/3.4/lib,
@@ -299,7 +326,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = /opt/homebrew/include;
+				HEADER_SEARCH_PATHS = (
+					/opt/homebrew/include,
+					"$(PROJECT_DIR)/shaders",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					/opt/homebrew/lib,
 					/opt/homebrew/Cellar/glfw/3.4/lib,
