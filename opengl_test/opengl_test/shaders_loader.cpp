@@ -10,8 +10,8 @@ std::string loadShaderSource(const std::string &path){
         return "";
     }
     
-    std::stringstream buffer; //буффер
-    buffer << file.rdbuf(); //записываем все содержимое файла в буффер
+    std::stringstream buffer; //буфер
+    buffer << file.rdbuf(); //записываем все содержимое файла в буфер
     return buffer.str(); //преобразуем содержимое буфера в строку
 }
 
